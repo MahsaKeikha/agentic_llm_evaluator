@@ -2,18 +2,22 @@
 
 A standalone multi-agent reference implementation for evaluating large language model behavior with explicit metrics, adversarial testing, calibration checks, evidence tracking, and human review gates.
 
-## Visible architecture
+## Direct agent links
 
-The repository exposes real executable modules directly in `AGENTS/`, `TOOLS/`, and `SKILLS/` so readers can inspect each component without searching through a monolithic source file.
+- [Evaluation Planner Agent](AGENTS/evaluation_planner_agent.py)
+- [Quality Judge Agent](AGENTS/quality_judge_agent.py)
+- [Safety Judge Agent](AGENTS/safety_judge_agent.py)
+- [Robustness Agent](AGENTS/robustness_agent.py)
+- [Calibration Agent](AGENTS/calibration_agent.py)
 
-## Agent team
+## Core implementation
 
-- Evaluation Planner Agent
-- Quality Judge Agent
-- Safety Judge Agent
-- Robustness Agent
-- Calibration Agent
-- Evaluation Orchestrator
+- [All agents](AGENTS/)
+- [All tools](TOOLS/)
+- [All skills](SKILLS/)
+- [Orchestration](orchestration/)
+- [Documentation](docs/)
+- [Tests](tests/)
 
 ## Execution
 
