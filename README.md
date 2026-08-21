@@ -1,44 +1,52 @@
 # F37 Agentic LLM Evaluator
 
-A standalone multi-agent reference implementation for evaluating large language model behavior with explicit metrics, adversarial testing, calibration checks, evidence tracking, and human review gates.
+A multi-agent reference implementation for evaluating language-model outputs with explicit rubrics, independent judges, robustness testing, calibration checks, evidence provenance, adjudication, and human review gates.
 
-## Direct agent links
+## Architecture
 
-- [Evaluation Planner Agent](AGENTS/evaluation_planner_agent.py)
-- [Quality Judge Agent](AGENTS/quality_judge_agent.py)
-- [Safety Judge Agent](AGENTS/safety_judge_agent.py)
+The evaluation pipeline separates planning, quality judgment, safety judgment, robustness analysis, calibration analysis, and adjudication. Each role writes traceable artifacts into shared evaluation state. Finalization is controlled by explicit score, safety, disagreement, and human-review gates.
+
+## Agents
+
+- [Evaluation Planner](AGENTS/evaluation_planner_agent.py)
+- [Quality Judge](AGENTS/quality_judge_agent.py)
+- [Safety Judge](AGENTS/safety_judge_agent.py)
 - [Robustness Agent](AGENTS/robustness_agent.py)
 - [Calibration Agent](AGENTS/calibration_agent.py)
+- [Adjudication Agent](AGENTS/adjudication_agent.py)
 
-## Core implementation
+## Core quality controls
 
-- [All agents](AGENTS/)
-- [All tools](TOOLS/)
-- [All skills](SKILLS/)
-- [Orchestration](orchestration/)
-- [Documentation](docs/)
-- [Tests](tests/)
+- rubric weights are normalized and validated
+- scores are bounded to 0 through 1
+- safety flags cannot be overridden by approval
+- perturbation instability is surfaced as a review risk
+- calibration error is measured explicitly
+- missing candidate content stops substantive judging
+- minimum-score failure cannot be overridden by human approval
+- all agent decisions and evidence are traceable
 
-## Execution
+## Run
 
 ```bash
+python -m pip install -e .[dev]
 python run.py
 pytest -q
+python evals/run_benchmarks.py
 ```
-
-The default example runs offline with deterministic fixtures and no model API key.
 
 ## Maturity
 
-Reference implementation. Production use requires task-specific benchmark validation, provider integration testing, security review, and independent evaluation.
+**L2 candidate** under the Agentic AI Library Gold Standard. L3 is intentionally not claimed until CI, benchmark reproducibility, broader adversarial suites, and independent validation are demonstrated.
 
-## AI Engineering Handbook Series
+## Documentation
 
-Companion books by Mahsa Keikha:
-
-- https://a.co/d/0cbZnSMi
-- https://a.co/d/07HnRY7H
+- [Architecture](docs/ARCHITECTURE.md)
+- [Agent contracts](docs/AGENTS.md)
+- [Evaluation methodology](docs/EVALUATION.md)
+- [Safety and review](docs/SAFETY.md)
+- [Extending the evaluator](docs/EXTENDING.md)
 
 ## License
 
-MIT.
+MIT. See [LICENSE](LICENSE).
