@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-llm-evaluator"
-version = "0.2.0"
-description = "Multi-agent reference implementation for LLM evaluation"
+version = "1.0.0"
+description = "L3 reference multi-agent system for reproducible LLM evaluation"
 requires-python = ">=3.10"
 authors = [{name = "Mahsa Keikha"}]
 license = {text = "MIT"}
 readme = "README.md"
+keywords = ["agentic-ai", "llm-evaluation", "multi-agent", "benchmarking", "reference-architecture"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]
