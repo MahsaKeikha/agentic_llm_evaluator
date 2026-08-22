@@ -13,7 +13,7 @@ from safety.approval_gate import can_finalize
 
 SYSTEM_ID = "F37"
 SYSTEM_NAME = "Agentic LLM Evaluator"
-VERSION = "0.2.0"
+VERSION = "1.0.0"
 
 
 def run_system(case: dict[str, Any], approve: bool = False) -> dict[str, Any]:
@@ -58,6 +58,7 @@ def run_system(case: dict[str, Any], approve: bool = False) -> dict[str, Any]:
         "system_id": SYSTEM_ID,
         "system_name": SYSTEM_NAME,
         "version": VERSION,
+        "maturity": "L3 Gold Standard",
         "run_id": state.run_id,
         "plan": state.plan,
         "judgments": state.judgments,
