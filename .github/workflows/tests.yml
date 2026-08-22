@@ -1,10 +1,8 @@
-name: CI
+name: Gold Standard CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 permissions:
   contents: read
@@ -27,7 +25,19 @@ jobs:
         run: ruff check .
       - name: Tests
         run: pytest -q
-      - name: Benchmarks
+      - name: Primary benchmarks
         run: python evals/run_benchmarks.py
+      - name: Held-out reproducibility suite
+        run: python evals/heldout_suite.py
+      - name: Minimal example
+        run: python examples/minimal.py
+      - name: Complete example
+        run: python examples/complete.py
       - name: Smoke run
         run: python run.py
+      - name: Upload held-out results
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: f37-heldout-results
+          path: benchmarks/heldout_results.json
