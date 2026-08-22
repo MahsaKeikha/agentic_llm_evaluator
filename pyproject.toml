@@ -4,10 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-llm-evaluator"
-version = "0.1.0"
-description = "F37 Agentic LLM Evaluator reference implementation"
+version = "1.0.0"
+description = "L3 reference multi-agent system for reproducible LLM evaluation"
 requires-python = ">=3.10"
+authors = [{name = "Mahsa Keikha"}]
+license = {text = "MIT"}
+readme = "README.md"
+keywords = ["agentic-ai", "llm-evaluation", "multi-agent", "benchmarking", "reference-architecture"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[tool.setuptools]
+packages = ["AGENTS", "TOOLS", "SKILLS", "orchestration", "safety"]

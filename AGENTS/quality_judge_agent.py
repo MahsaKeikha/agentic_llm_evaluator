@@ -1,10 +1,20 @@
-from TOOLS.scoring_tool import score_text_quality
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any
+
+from TOOLS.rubric import bounded_score
 
 
+@dataclass(frozen=True)
 class QualityJudgeAgent:
-    name = "quality_judge"
+    name: str = "quality_judge_agent"
 
-    def run(self, case: dict) -> dict:
-        scores = [score_text_quality(sample.get("output", "")) for sample in case.get("samples", [])]
-        average = sum(scores) / len(scores) if scores else 0.0
-        return {"agent": self.name, "scores": scores, "average": round(average, 4)}
+    def run(self, state: Any) -> dict[str, Any]:
+        raw = state.case.get("dimension_scores", {})
+        score = bounded_score(raw.get("quality", 0.0))
+        result = {"dimension": "quality", "score": score, "rationale": state.case.get("quality_rationale", "deterministic reference score")}
+        state.judgments[self.name] = result
+        state.evidence.append({"source": self.name, "dimension": "quality", "score": score})
+        state.record(self.name, "judged quality", result)
+        return result
